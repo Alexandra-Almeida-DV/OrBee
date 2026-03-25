@@ -2,6 +2,8 @@
 
 > **Status:** Em desenvolvimento Ativo 🚀
 
+![Dashboard Orbee](./assets/dashboard.png)
+
 O **Orbee** é um ecossistema inteligente de gestão de tarefas projetado para desenvolvedores que buscam alta performance sem abrir mão de uma interface moderna e fluida. O projeto utiliza o conceito de **Glassmorphism** e **Clean Architecture** para entregar uma experiência de usuário (UX) superior.
 
 ---
@@ -34,11 +36,3 @@ O **Orbee** é um ecossistema inteligente de gestão de tarefas projetado para d
 1. **Clone o repositório:**
    ```bash
    git clone [https://github.com/Alexandra-Almeida-DV/TaskFlow_Kanban.git](https://github.com/Alexandra-Almeida-DV/TaskFlow_Kanban.git)
-Instale as dependências:
-
-Bash
-npm install
-Inicie o servidor de desenvolvimento:
-
-Bash
-npm run dev
