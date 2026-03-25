@@ -1,0 +1,1 @@
+export type ViewType = 'Home' | 'Daily' | 'Weekly' | 'Monthly';
