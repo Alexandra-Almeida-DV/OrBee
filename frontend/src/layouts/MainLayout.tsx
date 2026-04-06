@@ -6,8 +6,9 @@ import { WeeklyView } from '../components/views/WeeklyViews';
 import { DailyView } from '../components/views/DailyViews';
 import { ViewType } from '../types/View';
 import { NotesView } from '../components/views/NotesView';
-import { SideBar } from '../components/Sidebar';
+import { SideBar } from '../components/SideBar';
 import { ProjectsView } from '../components/views/ProjectView';
+import { RecipesView } from '../components/views/RecipesView';
 interface Task {
   id: number;
   title: string;
@@ -48,6 +49,8 @@ export default function MainLayout() {
       case 'Weekly': return <WeeklyView />;
       default: 
         return <HomeView tasks={tasks} onViewChange={setActiveView} />;
+      case 'Receitas':
+         return <RecipesView />;  
     }
   };
 
@@ -71,3 +74,4 @@ export default function MainLayout() {
     </div>
   );
 }
+

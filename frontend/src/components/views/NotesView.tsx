@@ -1,13 +1,13 @@
-import { Plus, Trash2, X, Check } from 'lucide-react';
+import { Plus, Trash2, X, Check, StickyNote } from 'lucide-react';
 import { useState, useEffect } from 'react'; 
-import api from '../../../../backend/app/scr/services/api';
+import api from '../../services/api';
 
-// 1. Mudamos o nome da Interface para 'Note' para evitar conflito com o componente
 interface Note {
   id: number;
   content: string;
   color: string;
-  created_at: string; 
+  date?: string;       // Adicionado para bater com o Backend
+  created_at?: string; // Mantido por segurança
 }
 
 export function NotesView() {
@@ -15,12 +15,18 @@ export function NotesView() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newNoteText, setNewNoteText] = useState("");
 
-  // 2. BUSCAR NOTAS AO CARREGAR (O segredo da persistência)
+  // Função auxiliar para evitar o "Invalid Date"
+  const formatarData = (dateStr?: string) => {
+    if (!dateStr) return "Hoje";
+    const data = new Date(dateStr);
+    if (isNaN(data.getTime())) return "Recente"; // Se a data for inválida, mostra "Recente"
+    return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+  };
+
   useEffect(() => {
     const carregarNotas = async () => {
       try {
         const response = await api.get('/notes/');
-        console.log("Dados recebidos do banco:", response.data);
         setNotes(response.data); 
       } catch (error) {
         console.error("Erro ao carregar notas do backend:", error);
@@ -29,27 +35,25 @@ export function NotesView() {
     carregarNotas();
   }, []);
 
-  // 3. SALVAR NOTA NO BANCO
   const handleSaveNote = async () => {
     if (newNoteText.trim() === "") return;
 
     try {
       const response = await api.post<Note>('/notes/', {
-        content: newNoteText,
-        color: "#cff178" 
+          title: newNoteText.slice(0, 20),
+          content: newNoteText,
+          color: "#cff178" 
       });
 
-      // Atualiza o estado com a nota retornada pelo FastAPI
       setNotes((prev) => [response.data, ...prev]);
       setNewNoteText("");
       setIsModalOpen(false);
     } catch (error) {
       console.error("Erro ao salvar nota:", error);
-      alert("Não foi possível salvar no banco de dados. O backend está rodando?");
+      alert("Não foi possível salvar no banco de dados.");
     }
   };
 
-  // 4. DELETAR NO BANCO
   const deleteNote = async (id: number) => {
     try {
       await api.delete(`/notes/${id}`);
@@ -61,10 +65,22 @@ export function NotesView() {
 
   return (
     <div className="p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 relative min-h-screen">
-      <h2 className="text-3xl font-black text-[#5D5A88] mb-10">Notas Pessoais</h2>
-      
+      <header className="flex items-center gap-4 mb-10"> 
+        <div className="bg-[#cff178] p-3 rounded-2xl shadow-lg shadow-orange-100 flex-shrink-0">
+          <StickyNote className="text-white" size={28} />
+        </div>
+
+        <div className="flex flex-col justify-center">
+          <h2 className="text-4xl font-black text-[#5D5A88] leading-none">
+            Notas <span className="text-[#cff178]">Pessoais</span>
+          </h2>
+          <p className="text-[#8A88B6] font-bold text-[10px] uppercase tracking-widest mt-1">
+            Seus insights e lembretes
+          </p>
+        </div>
+      </header>
+
       <div className="flex flex-wrap gap-8">
-        {/* CARD CRIADOR */}
         <button 
           onClick={() => setIsModalOpen(true)}
           className="w-72 h-72 rounded-[40px] border-2 border-dashed border-white/40 bg-white/5 backdrop-blur-md flex flex-col items-center justify-center text-[#5D5A88] hover:bg-white/20 hover:border-[#cff178] transition-all group active:scale-95 shadow-sm"
@@ -75,14 +91,12 @@ export function NotesView() {
           <span className="mt-4 font-black uppercase text-[11px] tracking-[0.2em] opacity-60">Nova Nota</span>
         </button>
 
-        {/* LISTA DE NOTAS */}
         {notes.map((note) => (
           <div key={note.id} className="w-72 h-72 p-8 rounded-[40px] bg-white/40 backdrop-blur-xl border border-white/50 shadow-xl flex flex-col justify-between hover:scale-105 transition-all group">
             <div className="flex justify-between items-start">
               <span className="text-[10px] font-black text-[#8A88B6] uppercase tracking-widest bg-white/30 px-3 py-1 rounded-full">
-                <span className="text-[10px] font-black text-[#8A88B6] uppercase tracking-widest bg-white/30 px-3 py-1 rounded-full">
-                {new Date(note.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
-                </span>
+                {/* USA A FUNÇÃO DE FORMATAÇÃO AQUI */}
+                {formatarData(note.date || note.created_at)}
               </span>
               <button onClick={() => deleteNote(note.id)} className="text-[#8A88B6] hover:text-red-400 transition-colors">
                 <Trash2 size={18} />
@@ -91,12 +105,11 @@ export function NotesView() {
             <p className="text-[#5D5A88] font-bold leading-relaxed text-lg italic overflow-y-auto pr-2">
               "{note.content}"
             </p>
-            <div className="h-1 w-full bg-[#4ADE80]/20 rounded-full mt-4" />
+            <div className="h-1 w-full bg-[#cff178]/40 rounded-full mt-4" />
           </div>
         ))}
       </div>
 
-      {/* MODAL DE DIGITAÇÃO */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#5D5A88]/20 backdrop-blur-sm animate-in fade-in duration-300">
           <div className="bg-white/90 backdrop-blur-2xl w-full max-w-lg p-10 rounded-[50px] shadow-2xl border border-white flex flex-col gap-6 scale-in-center">
@@ -109,7 +122,7 @@ export function NotesView() {
 
             <textarea 
               autoFocus
-              className="w-full h-40 p-6 rounded-[30px] bg-[#5D5A88]/5 border-none focus:ring-2 focus:ring-[#4ADE80] text-[#5D5A88] font-medium resize-none placeholder:text-[#8A88B6]/50"
+              className="w-full h-40 p-6 rounded-[30px] bg-[#5D5A88]/5 border-none focus:ring-2 focus:ring-[#cff178] text-[#5D5A88] font-medium resize-none placeholder:text-[#8A88B6]/50"
               placeholder="O que você está pensando?"
               value={newNoteText}
               onChange={(e) => setNewNoteText(e.target.value)}
@@ -117,7 +130,7 @@ export function NotesView() {
 
             <button 
               onClick={handleSaveNote}
-              className="w-full py-5 bg-[#cff178] hover:bg-[#3ec972] text-white rounded-[30px] font-black flex items-center justify-center gap-2 shadow-lg shadow-[#4ADE80]/30 transition-all active:scale-95"
+              className="w-full py-5 bg-[#cff178] hover:bg-[#b8d962] text-white rounded-[30px] font-black flex items-center justify-center gap-2 shadow-lg shadow-[#cff178]/30 transition-all active:scale-95"
             >
               <Check size={20} /> Salvar Nota
             </button>

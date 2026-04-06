@@ -1,4 +1,4 @@
-import { Home, Settings, LogOut, StickyNote, FileCog } from 'lucide-react'; 
+import { Home, Settings, LogOut, StickyNote, FileCog, Utensils } from 'lucide-react'; 
 import { ViewType } from '../types/View'; 
 
 interface SidebarProps {
@@ -30,6 +30,13 @@ export function SideBar({ activeView, onViewChange }: SidebarProps) {
           icon={<FileCog size={24} />} // Ou use <FileCog size={24} />
           active={activeView === 'Project'}
           onClick={() => onViewChange('Project')}
+        />
+
+        {/* RECEITAS - O NOVO BOTÃO */}
+        <SidebarButton 
+          icon={<Utensils size={24} />} 
+          active={activeView === 'Receitas'}
+          onClick={() => onViewChange('Receitas')}
         />
         
         <div className="w-8 h-[1px] bg-white/10 my-2" />

@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^1.14.0",
-    "uvicorn": "^0.0.1-security"
-  }
-}

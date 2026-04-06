@@ -3,7 +3,7 @@ import { PlusCircle, Timer, Zap, Quote } from 'lucide-react';
 import { Calendar } from '../Calendar';
 import { ViewType } from '../../types/View';
 import { getDailyQuote } from '../../data/quotes';
-import api from '../../../../backend/app/scr/services/api'; 
+import api from '../../services/api'; 
 
 interface Task {
   id: number;
