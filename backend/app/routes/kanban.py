@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
-from app import schemas, models  # Importamos os moldes e as validações
+from app import schemas, models
+from app.models.kanban import Goal
 
 router = APIRouter(
     prefix="/kanban",
@@ -68,3 +69,23 @@ def move_task(task_id: int, new_column_id: int, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_task)
     return db_task
+
+@router.get("/tasks", response_model=List[schemas.Task])
+def get_all_tasks(db: Session = Depends(get_db)):
+    return db.query(models.kanban.TaskModel).all()
+
+@router.post("/goals", response_model=schemas.GoalCreate)
+def create_goal(goal: schemas.GoalCreate, db: Session = Depends(get_db)):
+    """Cria uma nova meta mensal."""
+    # Usamos o model correto para salvar no banco
+    db_goal = models.kanban.Goal(
+        title=goal.title,
+        target_value=goal.target_value,
+        current_value=goal.current_value,
+        color=goal.color,
+        month_reference=goal.month_reference
+    )
+    db.add(db_goal)
+    db.commit()
+    db.refresh(db_goal)
+    return db_goal

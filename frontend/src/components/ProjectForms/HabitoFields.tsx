@@ -23,7 +23,7 @@ export const HabitoFields: React.FC<HabitoFieldsProps> = ({
   selectedProject,
   handleCheckIn
 }) => {
-  // Lista de sugestões estáticas
+ 
   const suggestions = [
     { id: 'skincare', label: '✨ Skincare', name: 'Skincare (Manhã/Noite)' },
     { id: 'agua', label: '💧 Beber Água', name: 'Beber Água (Meta Diária)' },
@@ -36,7 +36,7 @@ export const HabitoFields: React.FC<HabitoFieldsProps> = ({
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
       
-      {/* Sugestões de Rotina */}
+   
       <div>
         <p className="text-[10px] font-black text-[#8A88B6] uppercase ml-2 mb-2">Sugestões de Rotina</p>
         <div className="grid grid-cols-2 gap-2">
@@ -57,7 +57,6 @@ export const HabitoFields: React.FC<HabitoFieldsProps> = ({
         </div>
       </div>
 
-      {/* Slider de Meta de Consistência */}
       <div className="bg-white/50 p-4 rounded-3xl border border-white/60 shadow-sm">
         <div className="flex justify-between items-center mb-2">
           <p className="text-[10px] font-black text-[#8A88B6] uppercase ml-2">Meta de Consistência</p>
@@ -75,11 +74,10 @@ export const HabitoFields: React.FC<HabitoFieldsProps> = ({
         />
       </div>
 
-      {/* Dashboard de Streak (Aparece apenas quando o hábito já foi criado e está sendo editado) */}
       {selectedProject && (
         <div className="animate-in fade-in zoom-in-95 duration-300">
           <div className="mb-2 bg-[#cff178] p-6 rounded-[35px] shadow-sm text-center relative overflow-hidden">
-            {/* Ícone de fundo sutil */}
+           
             <Check className="absolute -right-2 -bottom-2 w-20 h-20 text-[#5D5A88]/5 rotate-12" />
             
             <div className="relative z-10">
@@ -98,7 +96,7 @@ export const HabitoFields: React.FC<HabitoFieldsProps> = ({
             </div>
           </div>
           
-          {/* Indicador visual de progresso rumo à meta */}
+
           <p className="text-[9px] font-bold text-[#8A88B6] text-center uppercase tracking-widest">
             {Math.round(((selectedProject.meta_data?.streak || 0) / habitGoal) * 100)}% da meta alcançada
           </p>

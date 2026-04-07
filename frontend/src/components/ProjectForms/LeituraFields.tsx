@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Interface que define todas as props necessárias para o formulário de Leitura
+
 interface LeituraFieldsProps {
   author: string;
   setAuthor: (val: string) => void;
@@ -12,7 +12,7 @@ interface LeituraFieldsProps {
   setDailyGoal: (val: number) => void;
   newNotes: string;
   setNewNotes: (val: string) => void;
-  readingProgress: number; // Recebe o cálculo feito no pai
+  readingProgress: number; 
 }
 
 export const LeituraFields: React.FC<LeituraFieldsProps> = ({

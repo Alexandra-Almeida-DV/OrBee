@@ -1,10 +1,7 @@
 import { Plus, Trash2, X, Check, Book, Briefcase, GraduationCap, Zap, TrendingUp, LucideIcon, FileCog } from 'lucide-react';
 import { useEffect, useCallback, useState } from 'react';
 import api from '../../services/api';
-
-// Hooks e Tipagens
 import { useProjectForm, Project } from '../../hooks/useProjectForm';
-
 // Subcomponentes
 import { ProjetoFields } from '../ProjectForms/PojetoFields';
 import { LeituraFields } from '../ProjectForms/LeituraFields';

@@ -3,7 +3,6 @@ from datetime import date
 from typing import Optional, List
 
 # --- BASE CONFIG ---
-# Criamos uma base para não precisar repetir o model_config em tudo
 class TunedBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -18,7 +17,7 @@ class NoteCreate(NoteBase):
 
 class NoteResponse(NoteBase, TunedBase):
     id: int
-    date: str  # Se no banco for string, mantém str. Se for date, use date.
+    date: str  
 
 # --- SCHEMAS DO KANBAN ---
 class TaskBase(BaseModel):
@@ -71,6 +70,20 @@ class RecipeBase(BaseModel):
 class RecipeCreate(RecipeBase):
     pass
 
-# MUDAMOS DE RecipeResponse PARA Recipe
 class Recipe(RecipeBase, TunedBase):
     id: int
+
+class GoalCreate(BaseModel):
+    title: str
+    target_value: float
+    current_value: Optional[float] = 0.0
+    color: str
+    month_reference: date
+
+class GoalResponse(BaseModel):
+    title: str
+    progress: float
+    color: str
+
+    class Config:
+        from_attributes = True

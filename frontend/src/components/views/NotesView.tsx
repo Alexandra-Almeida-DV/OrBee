@@ -6,20 +6,18 @@ interface Note {
   id: number;
   content: string;
   color: string;
-  date?: string;       // Adicionado para bater com o Backend
-  created_at?: string; // Mantido por segurança
+  date?: string;      
+  created_at?: string; 
 }
 
 export function NotesView() {
   const [notes, setNotes] = useState<Note[]>([]); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newNoteText, setNewNoteText] = useState("");
-
-  // Função auxiliar para evitar o "Invalid Date"
   const formatarData = (dateStr?: string) => {
     if (!dateStr) return "Hoje";
     const data = new Date(dateStr);
-    if (isNaN(data.getTime())) return "Recente"; // Se a data for inválida, mostra "Recente"
+    if (isNaN(data.getTime())) return "Recente";
     return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
   };
 
@@ -95,7 +93,6 @@ export function NotesView() {
           <div key={note.id} className="w-72 h-72 p-8 rounded-[40px] bg-white/40 backdrop-blur-xl border border-white/50 shadow-xl flex flex-col justify-between hover:scale-105 transition-all group">
             <div className="flex justify-between items-start">
               <span className="text-[10px] font-black text-[#8A88B6] uppercase tracking-widest bg-white/30 px-3 py-1 rounded-full">
-                {/* USA A FUNÇÃO DE FORMATAÇÃO AQUI */}
                 {formatarData(note.date || note.created_at)}
               </span>
               <button onClick={() => deleteNote(note.id)} className="text-[#8A88B6] hover:text-red-400 transition-colors">

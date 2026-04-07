@@ -17,7 +17,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# Dependência para as rotas do FastAPI
 def get_db():
     db = SessionLocal()
     try:

@@ -11,7 +11,6 @@ export function SideBar({ activeView, onViewChange }: SidebarProps) {
     <aside className="w-24 bg-[#7C7AB8] m-4 rounded-[40px] flex flex-col items-center py-8 shadow-2xl h-[calc(100vh-32px)] z-50">
 
       <nav className="flex flex-col gap-6 items-center flex-1 w-full">
-        {/* Home */}
         <SidebarButton 
           icon={<Home size={24} />} 
           active={activeView === 'Home'} 

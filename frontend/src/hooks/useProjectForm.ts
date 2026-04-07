@@ -21,7 +21,6 @@ export interface MetaData {
   priority?: string;  
   links?: { id: string; url: string }[];
   tasks?: { id: string; text: string; completed: boolean }[];
-  // --- Novos campos para Receitas ---
   ingredients?: string;
   instructions?: string;
 }
@@ -62,8 +61,6 @@ export function useProjectForm(onSuccess: () => void) {
   const [newLinkUrl, setNewLinkUrl] = useState('');
   const [tasks, setTasks] = useState<{ id: string; text: string; completed: boolean }[]>([]);
   const [newTaskText, setNewTaskText] = useState('');
-  
-  // --- Novos Estados para Receitas ---
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
 
@@ -90,7 +87,6 @@ export function useProjectForm(onSuccess: () => void) {
     setCurrentPage(0);
     setDailyGoal(10);
     setCurrentValue(0);
-    // Limpando campos de receita
     setIngredients('');
     setInstructions('');
   }, []);
@@ -115,7 +111,6 @@ const handleOpenEdit = useCallback((project: Project) => {
         setTotalPages(meta.total_pages || 0);
         setTargetValue(meta.target_value || 0);
         setCurrentValue(meta.current_value || 0);
-        // Carregando dados da receita
         setIngredients(meta.ingredients || '');
         setInstructions(meta.instructions || '');
     }
@@ -138,7 +133,6 @@ const handleOpenEdit = useCallback((project: Project) => {
     setPriority(meta.priority || 'média');
     setLinks(meta.links || []);
     setTasks(meta.tasks || []);
-    // Garantindo que ingredientes/instruções sejam setados
     setIngredients(meta.ingredients || '');
     setInstructions(meta.instructions || '');
 
@@ -169,7 +163,6 @@ const handleOpenEdit = useCallback((project: Project) => {
       priority: priority,
       links: links,
       tasks: tasks,
-      // Salvando campos de receita
       ingredients: ingredients,
       instructions: instructions,
     };
@@ -213,7 +206,7 @@ const handleOpenEdit = useCallback((project: Project) => {
       totalPages, dailyGoal, currentValue, targetValue, unit, metaType,
       habitGoal, newStartDate, newEndDate, newDescription, newNotes,
       newGoalPurpose, priority, category, links, newLinkUrl, tasks, newTaskText,
-      ingredients, instructions // Retornando novos estados
+      ingredients, instructions 
     },
     progress: {
       projectProgress, readingProgress, metaProgress
@@ -224,7 +217,7 @@ const handleOpenEdit = useCallback((project: Project) => {
       setHabitGoal, setNewStartDate, setNewEndDate, setNewDescription,
       setNewNotes, setNewGoalPurpose, setPriority, setCategory, setLinks,
       setNewLinkUrl, setTasks, setNewTaskText,
-      setIngredients, setInstructions, // Retornando novos setters
+      setIngredients, setInstructions, 
       closeModal, handleOpenEdit, handleSaveProject
     }
   };

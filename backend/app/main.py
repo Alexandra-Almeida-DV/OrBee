@@ -1,17 +1,23 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine, Base
-from app.routes import kanban, notes, projects, recipes
+from sqlalchemy.orm import Session 
+from app.database import engine, Base, get_db 
+from app.services.analytics_services import AnalyticsService 
+from app.routes import (
+    kanban_router, 
+    notes_router, 
+    projects_router, 
+    recipes_router, 
+    monthly_router
+)
 
 app = FastAPI(title="OrBee API - TaskFlow")
 
-# --- CONFIGURAÇÃO DE CORS ---
-# Isso permite que o seu Frontend (React) acesse o Backend sem ser bloqueado
-origins = [
-    "http://localhost:5173",    # Porta padrão do Vite
-    "http://127.0.0.1:5173",
-]
+# --- CORS ---
+origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
+app.include_router(kanban_router)
+analytics_router = APIRouter(prefix="/analytics", tags=["Analytics"])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -20,14 +26,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Cria as tabelas no banco de dados automaticamente
 Base.metadata.create_all(bind=engine)
 
-# --- REGISTRO DAS ROTAS MODULARES ---
-app.include_router(kanban.router)
-app.include_router(notes.router)
-app.include_router(projects.router)
-app.include_router(recipes.router)
+@analytics_router.get("/month")
+def get_monthly_data(db: Session = Depends(get_db)):
+    service = AnalyticsService(db)
+    return service.get_monthly_dashboard()
+
+app.include_router(kanban_router)
+app.include_router(notes_router)
+app.include_router(projects_router)
+app.include_router(recipes_router)
+app.include_router(monthly_router, prefix="/monthly", tags=["Monthly Analytics"])
+
+app.include_router(analytics_router)
 
 @app.get("/")
 def home():
