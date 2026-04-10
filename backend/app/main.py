@@ -8,16 +8,14 @@ from app.routes import (
     notes_router, 
     projects_router, 
     recipes_router, 
-    monthly_router
+    monthly_router,
+    auth  # Importa o módulo auth
 )
 
 app = FastAPI(title="OrBee API - TaskFlow")
 
-# --- CORS ---
 origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
-app.include_router(kanban_router)
-analytics_router = APIRouter(prefix="/analytics", tags=["Analytics"])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -28,19 +26,22 @@ app.add_middleware(
 
 Base.metadata.create_all(bind=engine)
 
-@analytics_router.get("/month")
-def get_monthly_data(db: Session = Depends(get_db)):
-    service = AnalyticsService(db)
-    return service.get_monthly_dashboard()
-
+app.include_router(auth.router) 
 app.include_router(kanban_router)
 app.include_router(notes_router)
 app.include_router(projects_router)
 app.include_router(recipes_router)
 app.include_router(monthly_router, prefix="/monthly", tags=["Monthly Analytics"])
+analytics_router = APIRouter(prefix="/analytics", tags=["Analytics"])
+
+@analytics_router.get("/month")
+def get_monthly_data(db: Session = Depends(get_db)):
+    service = AnalyticsService(db)
+    return service.get_monthly_dashboard()
 
 app.include_router(analytics_router)
 
 @app.get("/")
 def home():
     return {"status": "ok", "message": "Backend OrBee operando com Clean Architecture!"}
+    

@@ -1,6 +1,4 @@
 import React from 'react';
-
-// Interface com todos os estados necessários para gerenciar as Metas
 interface MetaFieldsProps {
   metaType: 'quantitativa' | 'qualitativa';
   setMetaType: (type: 'quantitativa' | 'qualitativa') => void;

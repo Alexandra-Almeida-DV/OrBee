@@ -35,3 +35,4 @@ def delete_note(note_id: int, db: Session = Depends(get_db)):
     db.delete(db_note)
     db.commit()
     return {"status": "success", "message": "Nota excluída"}
+    

@@ -233,15 +233,13 @@ export const RecipesView: React.FC = () => {
         ))}
       </div>
 
- {/* --- MODAL DE VISUALIZAÇÃO (ÚNICO) --- */}
+ {/* --- MODAL DE VISUALIZAÇÃO --- */}
 {selectedViewRecipe && (
   <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={() => setSelectedViewRecipe(null)}>
     <div className="bg-white rounded-[40px] max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative shadow-2xl" onClick={e => e.stopPropagation()}>
       <button onClick={() => setSelectedViewRecipe(null)} className="absolute top-6 right-6 text-[#8A88B6] hover:rotate-90 transition-transform p-2 bg-gray-50 rounded-full z-10">
         <X size={24} />
       </button>
-
-      {/* --- BLOCO DA IMAGEM ADICIONADO AQUI --- */}
       {selectedViewRecipe.image && (
         <div className="w-full h-64 mb-8 rounded-[30px] overflow-hidden shadow-inner bg-orange-50">
           <img 

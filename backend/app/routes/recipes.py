@@ -15,7 +15,6 @@ def get_recipes(db: Session = Depends(get_db)):
 
 @router.post("/", response_model=schemas.Recipe)
 def create_recipe(recipe: schemas.RecipeCreate, db: Session = Depends(get_db)):
-    # Criamos a instância do modelo com os dados que vieram do React
     db_recipe = models.kanban.RecipeModel(
         title=recipe.title,
         ingredients=recipe.ingredients,
@@ -38,3 +37,4 @@ def delete_recipe(recipe_id: int, db: Session = Depends(get_db)):
     db.delete(db_recipe)
     db.commit()
     return {"message": "Receita deletada com sucesso"}
+    

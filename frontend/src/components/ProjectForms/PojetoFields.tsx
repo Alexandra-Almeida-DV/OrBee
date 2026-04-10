@@ -1,7 +1,5 @@
 import React from 'react';
 import { Plus, X, ArrowUpRight } from 'lucide-react';
-
-// Interface completa para o componente de Projeto
 interface ProjetoFieldsProps {
   category: string;
   setCategory: (val: string) => void;

@@ -2,11 +2,9 @@ from pydantic import BaseModel, ConfigDict
 from datetime import date
 from typing import Optional, List
 
-# --- BASE CONFIG ---
 class TunedBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
-# --- SCHEMAS DE NOTAS ---
 class NoteBase(BaseModel):
     title: str
     content: str
@@ -19,7 +17,6 @@ class NoteResponse(NoteBase, TunedBase):
     id: int
     date: str  
 
-# --- SCHEMAS DO KANBAN ---
 class TaskBase(BaseModel):
     title: str
     completed: bool
@@ -44,7 +41,6 @@ class ColumnResponse(ColumnBase, TunedBase):
     id: int
     tasks: List[Task] = []
 
-# --- SCHEMAS DE PROJETOS ---
 class ProjectBase(BaseModel):
     name: str
     type: str  
@@ -58,7 +54,6 @@ class ProjectResponse(ProjectBase, TunedBase):
     id: int
     progress: float
 
-# --- SCHEMAS DE RECEITAS ---
 class RecipeBase(BaseModel):
     title: str
     ingredients: str
@@ -88,3 +83,21 @@ class GoalResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class UserCreate(BaseModel):
+    email: str
+    password: str
+    full_name: Optional[str] = None
+    display_name: Optional[str] = None
+    phone: Optional[str] = None
+    bio: Optional[str] = None
+
+class UserResponse(TunedBase):
+    id: int
+    email: str
+    full_name: Optional[str]
+    display_name: Optional[str]
+
+class UserLogin(BaseModel):
+    email: str    
+    password: str            

@@ -1,0 +1,16 @@
+venv/
+.venv/
+env/
+ENV/
+*.sqlite3
+*.db
+Kanban.db
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+*.log
+.DS_Store
+Thumbs.db

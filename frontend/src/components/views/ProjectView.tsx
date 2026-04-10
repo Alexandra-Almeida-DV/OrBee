@@ -96,7 +96,7 @@ export function ProjectsView() {
         </div>
       </header>
 
-      {/* CONTAINER ALINHADO (items-start garante que as abas fiquem no topo) */}
+      {/* CONTAINER ALINHADO */}
       <div className="flex flex-wrap gap-8 items-start">
         
         {/* CARD CRIADOR (PASTA PONTILHADA) */}
@@ -113,7 +113,7 @@ export function ProjectsView() {
           <span className="mt-4 font-black uppercase text-[11px] tracking-[0.2em] opacity-60">Nova Iniciativa</span>
         </button>
 
-        {/* LISTA DE PROJETOS (FORMATO DE PASTA) */}
+        {/* LISTA DE PROJETO */}
         {projects.map((project) => {
           const lowerType = project.type.toLowerCase();
           const Config = typeConfig[lowerType] || typeConfig['projeto'];

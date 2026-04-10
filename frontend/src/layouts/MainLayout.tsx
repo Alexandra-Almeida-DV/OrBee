@@ -11,7 +11,8 @@ import { RecipesView } from '../components/views/RecipesView';
 import { ViewType } from '../types/View';
 import { parseISO } from 'date-fns';
 import { Menu, Home, StickyNote, FileCog, Utensils, Settings, LogOut } from 'lucide-react';
-
+import { LoginView } from '../components/Login/LoginView';
+import { SettingsView } from '../components/views/SettingsView';
 interface Task {
   id: number;
   title: string;
@@ -22,6 +23,7 @@ interface Task {
 }
 
 export default function MainLayout() {
+  const logoAbelha = new URL('../assets/Logoorbee.png', import.meta.url).href;
   const [activeView, setActiveView] = useState<ViewType>('Home');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,9 +68,14 @@ export default function MainLayout() {
             }}
           />
         );
+      case 'Login':
+        return (
+        <LoginView 
+        onViewChange={(view) => setActiveView(view as ViewType)}/>);
       case 'Notas': return <NotesView />;
       case 'Project': return <ProjectsView />;
       case 'Receitas': return <RecipesView />;
+      case 'Settings': return <SettingsView />;
       default:
         return <HomeView tasks={tasks} onViewChange={setActiveView}/>;
     }
@@ -93,10 +100,14 @@ export default function MainLayout() {
           className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setIsMenuOpen(false)} 
         />
-        <aside className={`absolute top-2 left-4 h-[calc(100vh-32px)] w-60 bg-[#7C7AB8]/60 backdrop-blur-xl border 
+        <aside className={`absolute top-4 left-4 h-[calc(100vh-32px)] w-60 bg-[#7C7AB8]/60 backdrop-blur-xl border 
           border-white/20 rounded-[40px] shadow-2xl flex flex-col items-center py-10 transition-all duration-500 
           ease-in-out ${isMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
-          <div className="mb-12 flex flex-col items-center gap-1">
+          <div className="mb-3 flex flex-col items-center gap-1">
+             <img 
+             src={logoAbelha} 
+             alt="OrBee Logo" 
+             className="w-12 h-15 object-contain"/>
             <h1 className="text-4xl tracking-tighter select-none flex items-center gap-1">
               <span className="font-black text-white drop-shadow-md">Or</span>
               <span className="font-light text-white/90 italic tracking-tight">Bee</span>
@@ -120,8 +131,6 @@ export default function MainLayout() {
               Mês
             </button>
             </div>
-            <DrawerButton icon={<StickyNote size={24} />} active={activeView === 'Notas'}
-            onClick={() => { setActiveView('Notas'); setIsMenuOpen(false); }}/>
             <DrawerButton icon={<StickyNote size={24} />} active={activeView === 'Notas'} onClick={() => { setActiveView('Notas'); setIsMenuOpen(false); }} />
             <DrawerButton icon={<FileCog size={24} />} active={activeView === 'Project'} onClick={() => { setActiveView('Project'); setIsMenuOpen(false); }} />
             <DrawerButton icon={<Utensils size={24} />} active={activeView === 'Receitas'} onClick={() => { setActiveView('Receitas'); setIsMenuOpen(false); }} />
@@ -146,12 +155,33 @@ export default function MainLayout() {
           isMenuOpen={isMenuOpen} 
         />
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 pt-2">
-          <div className="max-w-[1600px] mx-auto h-full">
+        {/* AJUSTE: Adicionado flex e flex-col para o footer se comportar corretamente */}
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 pt-2 flex flex-col">
+          <div className="max-w-[1600px] mx-auto w-full flex-1">
             <div key={activeView} className="h-full animate-in fade-in duration-500">
               {renderView()}
             </div>
           </div>
+
+          {/* --- FOOTER ORBEE --- */}
+          <footer className="mt-8 py-10 flex flex-col items-center justify-center gap-2 opacity-40 hover:opacity-100 transition-opacity duration-500">
+            <div className="flex items-center gap-1">
+              <img 
+                src={logoAbelha} 
+                alt="OrBee" 
+                className="w-4 h-4 grayscale brightness-200" 
+              />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white">
+                OrBee <span className="font-light">Colmeia</span>
+              </span>
+            </div>
+            
+            <p className="text-[13px] text-white/60 font-medium text-center">
+              &copy; {new Date().getFullYear()} — Desenvolvido com 💜 por Alexandra Almeida
+            </p>
+            
+            <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent mt-1" />
+          </footer>
         </main>
       </div>
     </div>

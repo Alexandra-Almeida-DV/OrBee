@@ -92,10 +92,7 @@ export function HomeView({ onViewChange }: HomeViewProps) {
 
   // FILTRO INTELIGENTE DE TAREFAS
   const tarefasDeHoje = listaTarefas.filter((t) => {
-    // Limpa espaços e garante que estamos comparando apenas os 10 primeiros caracteres (YYYY-MM-DD)
     const dataTarefa = String(t.date || "").trim().substring(0, 10);
-    
-    // LOG DE DEBUG (Abra o F12 para ver a mágica no console)
     if (listaTarefas.length > 0) {
       console.log(`Comparando: Banco(${dataTarefa}) === Hoje(${hojeStr})`);
     }

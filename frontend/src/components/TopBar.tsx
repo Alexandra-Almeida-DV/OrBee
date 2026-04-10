@@ -1,15 +1,24 @@
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; 
-import { Search, Bell } from 'lucide-react';
+import { Search, Bell, UserCircle } from 'lucide-react';
 import { ViewType } from '../types/View'; 
-
+import { useAuth } from '../hooks/useAuth'
 interface TopBarProps {
   activeView: ViewType;
   onViewChange: (view: ViewType) => void;
-  isMenuOpen: boolean; 
+  isMenuOpen: boolean;
+  user?: {
+    display_name: string;
+    photo_url?: string;
+  } | null;
 }
 
 export function TopBar({ activeView, onViewChange, isMenuOpen }: TopBarProps) {
+  const logoAbelha = new URL('../assets/Logoorbee.png', import.meta.url).href;
+  const { user, signed } = useAuth();
+  const saudacaoNome = signed && user 
+    ? (user.display_name || user.full_name) 
+    : 'Visitante';
   const dataHoje = format(new Date(), "EEEE, dd 'de' MMMM", { locale: ptBR });
   const dataFormatada = dataHoje.charAt(0).toUpperCase() + dataHoje.slice(1);
   
@@ -24,29 +33,31 @@ export function TopBar({ activeView, onViewChange, isMenuOpen }: TopBarProps) {
   return (
     <header className="w-full p-6 flex items-center justify-between bg-transparent">
 
-      <div className="flex items-center gap-4">
-        {/* LOGO: Visível apenas no Desktop e some se o menu abrir */}
+      <div className="flex items-center gap-8">
         <div className={`hidden lg:flex items-center gap-1 select-none transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}>
+          <img 
+          src={logoAbelha} 
+          alt="OrBee Logo" 
+          className="w-12 h-15 object-contain" // w-8 é um tamanho ótimo para barra superior
+        />
           <h1 className="text-4xl tracking-tighter flex items-center gap-1">
             <span className="font-black text-white drop-shadow-md">Or</span>
             <span className="font-light text-white/90 italic tracking-tight">Bee</span>
           </h1>
           <div className="w-2 h-2 bg-[#cff178] rounded-full mt-4 animate-pulse shadow-[0_0_10px_#4ADE80]" />
         </div>
-
-        {/* MENSAGEM: Recuo no mobile para o hambúrguer */}
         <div className="flex flex-col pl-16 lg:pl-0">
           <h1 className="text-xl font-black text-white tracking-tight leading-none mb-1">
-            Olá, Alexandra! 👋
+            Olá, {saudacaoNome}! 👋
           </h1>
           <p className="text-sm font-bold text-white/60">
-            {subtituloConteudo}
+          {subtituloConteudo}
           </p>
         </div>
       </div>
 
       <div className="flex items-center gap-8">
-        {/* NAVEGAÇÃO DE PERÍODO: Agora voltamos a usar o NavTab e onViewChange aqui */}
+        {/* NAVEGAÇÃO DE PERÍODO */}
         <nav className="hidden xl:flex items-center bg-white/10 backdrop-blur-md p-1 rounded-2xl border border-white/10">
           <NavTab 
             label="Diário" 
@@ -65,7 +76,6 @@ export function TopBar({ activeView, onViewChange, isMenuOpen }: TopBarProps) {
           />
         </nav>
 
-        {/* BUSCA E PERFIL */}
         <div className="flex items-center gap-3">
           <div className="hidden md:flex items-center bg-white/20 border border-white/20 px-4 py-2 rounded-2xl focus-within:bg-white transition-all group">
             <Search size={18} className="text-white group-focus-within:text-primary-700" />
@@ -81,11 +91,23 @@ export function TopBar({ activeView, onViewChange, isMenuOpen }: TopBarProps) {
             <span className="absolute top-3 right-3 w-2 h-2 bg-accent-500 rounded-full border-2 border-white"></span>
           </button>
           
-          <img 
-            src="https://github.com/Alexandra-Almeida-DV.png" 
-            alt="Alexandra"
-            className="w-12 h-12 rounded-2xl border-4 border-white shadow-lg object-cover"
-          />
+          {/* BOTÃO DE PERFIL / LOGIN */}
+          <button 
+            onClick={() => onViewChange('Login')}
+            className="focus:outline-none transition-all hover:scale-105 active:scale-95 hover:bg-[#CFF178] hover:text-[#3A385F] p-2 rounded-full"
+          >
+            {user?.photo_url ? (
+              <img 
+                src={user.photo_url} 
+                alt={user.display_name}
+                className="w-12 h-12 rounded-2xl border-4 border-white shadow-lg object-cover"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-2xl border-4 border-white bg-white/10 flex items-center justify-center text-white shadow-lg">
+                <UserCircle size={28} />
+              </div>
+            )}
+          </button>
         </div>
       </div>
     </header>

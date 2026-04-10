@@ -11,7 +11,6 @@ router = APIRouter(
 )
 
 # --- ROTAS DE COLUNAS ---
-
 @router.get("/columns/", response_model=List[schemas.ColumnResponse])
 def get_columns(db: Session = Depends(get_db)):
     """Retorna todas as colunas e suas respectivas tarefas."""
@@ -36,12 +35,9 @@ def delete_column(column_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"status": "success", "message": "Coluna removida"}
 
-# --- ROTAS DE TAREFAS ---
-
 @router.post("/tasks/", response_model=schemas.Task, status_code=201)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
     """Cria uma tarefa vinculada a uma coluna específica."""
-    # Verifica se a coluna existe antes de criar a tarefa
     db_column = db.query(models.kanban.ColumnModel).filter(models.kanban.ColumnModel.id == task.column_id).first()
     if not db_column:
         raise HTTPException(status_code=404, detail="Coluna de destino não existe")
@@ -111,4 +107,3 @@ def toggle_task_status(task_id: int, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_task)
     return db_task    
-

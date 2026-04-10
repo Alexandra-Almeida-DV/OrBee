@@ -1,5 +1,3 @@
-// src/data/quotes.ts
-
 export interface QuoteType {
   texto: string;
   autor: string;
@@ -40,9 +38,7 @@ export const quotes: QuoteType[] = [
 
 export function getDailyQuote(): QuoteType {
   const hoje = new Date();
-  const diaDoMes = hoje.getDate(); // Retorna de 1 a 31
+  const diaDoMes = hoje.getDate(); 
 
-  // Usamos (diaDoMes - 1) para ajustar ao índice do array (0 a 29)
-  // O operador % garante que se o array for menor ou maior, nunca dê erro
   return quotes[(diaDoMes - 1) % quotes.length];
 }

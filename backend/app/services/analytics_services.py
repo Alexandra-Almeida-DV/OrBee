@@ -10,9 +10,7 @@ class AnalyticsService:
     def __init__(self, db: Session):
         self.db = db
 
-    # =========================
-    # 📊 DASHBOARD MENSAL
-    # =========================
+    #  DASHBOARD MENSAL
     def get_monthly_dashboard(self):
         today = date.today()
         first_day = today.replace(day=1)
@@ -25,16 +23,12 @@ class AnalyticsService:
             TaskModel.date.like(f"{month_prefix}%")
         ).all()
 
-        # =========================
-        # 📊 SUMMARY
-        # =========================
+        # SUMMARY
         total = len(tasks)
         completed = sum(1 for t in tasks if t.completed)
         rate = round((completed / total * 100), 1) if total > 0 else 0
 
-        # =========================
-        # 📅 HEATMAP
-        # =========================
+        # HEATMAP
         calendar_heatmap = {}
 
         for task in tasks:
@@ -60,7 +54,6 @@ class AnalyticsService:
                 "completed": task.completed
             })
 
-        # 🔹 Definir status do dia
         for day in calendar_heatmap.values():
             if day["count"] == 0:
                 day["status"] = "vazio"
@@ -71,9 +64,7 @@ class AnalyticsService:
             else:
                 day["status"] = "pendente"
 
-        # =========================
-        # 📈 MELHOR DIA DA SEMANA
-        # =========================
+        # MELHOR DIA DA SEMANA
         productivity_by_day = (
             self.db.query(
                 func.strftime('%w', TaskModel.date).label('day_of_week'),
@@ -98,9 +89,7 @@ class AnalyticsService:
             best_day_idx = max(productivity_by_day, key=lambda x: x[1])[0]
             best_day = days_map.get(best_day_idx, "---")
 
-        # =========================
-        # 🎯 GOALS (Referência do mês)
-        # =========================
+        # GOALS (Referência do mês)
         db_goals = self.db.query(Goal).filter(
             Goal.month_reference == first_day
         ).all()
@@ -135,4 +124,5 @@ class AnalyticsService:
             return f"Bom progresso. Você rende melhor na {best_day}."
         elif rate >= 30:
             return f"Ritmo moderado. Tente organizar sua {best_day}."
-        return "Baixa consistência. Comece com pequenas tarefas para ganhar ritmo."  
+        return "Baixa consistência. Comece com pequenas tarefas para ganhar ritmo." 
+         

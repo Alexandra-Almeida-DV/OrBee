@@ -8,6 +8,7 @@ import {
   BarChart3, 
   Calendar as CalendarIcon 
 } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
 
 // --- TYPES ---
 type Task = {
@@ -46,6 +47,7 @@ interface MonthlyViewProps {
 }
 
 export function MonthlyView({ tasks, onDateClick }: MonthlyViewProps) {
+  const { signed } = useAuth();
   const [data, setData] = useState<DashboardData | null>(null);
   const [selectedDay, setSelectedDay] = useState<DayData | null>(null);
   const [loading, setLoading] = useState(true); // Controle de loading explícito
@@ -98,7 +100,8 @@ export function MonthlyView({ tasks, onDateClick }: MonthlyViewProps) {
             onDateClick(dateStr);
             if (dayData) setSelectedDay(dayData);
           }}
-          className={`h-16 md:h-20 rounded-[20px] md:rounded-[25px] transition-all duration-300 flex flex-col items-center justify-center gap-1 border-2 border-transparent hover:border-white/20 active:scale-95
+          className={`h-16 md:h-20 rounded-[20px] md:rounded-[25px] transition-all duration-300 flex flex-col items-center 
+            justify-center gap-1 border-2 border-transparent hover:border-white/20 active:scale-95
             ${getColor(dayData?.status)}`}
         >
           <span className="text-base md:text-lg font-black">{i}</span>
@@ -120,6 +123,31 @@ export function MonthlyView({ tasks, onDateClick }: MonthlyViewProps) {
 
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-10 animate-in fade-in duration-700">
+      {!signed ? (
+      <div className=" p-6 rounded-[35px] shadow-lg flex items-center justify-center text-center">
+        <p className="text-[#3A385F]/50 font-black text-lg md:text-xl uppercase tracking-tighter">
+          🐝 Conecte-se, faça parte da colméia e veja seus progressos mensais!
+        </p>
+      </div>
+    ) : (
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <StatCard title="Foco" icon={<TrendingUp size={14}/>} color="text-[#cff178]">
+          {data.summary?.rate ?? 0}%
+        </StatCard>
+        <StatCard title="Tasks" icon={<BarChart3 size={14}/>} color="text-white">
+          {data.summary?.completed ?? 0}/{data.summary?.total ?? 0}
+        </StatCard>
+        <StatCard title="Melhor" icon={<CheckCircle2 size={14}/>} color="text-[#A5A3C8]">
+          {data.summary?.best_day?.split(' ')[0] ?? "---"} 
+        </StatCard>
+        <div className="col-span-2 md:col-span-1 bg-[#cff178] p-4 md:p-5 rounded-[30px] flex items-center gap-3 shadow-lg shadow-[#cff178]/5">
+           <BrainCircuit className="text-[#5D5A88] shrink-0" size={20} />
+           <p className="text-[#5D5A88] text-[9px] md:text-[10px] font-bold leading-tight uppercase">
+             {data.summary?.insight_message ?? "Continue focado!"}
+           </p>
+        </div>
+      </div>
+    )}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <StatCard title="Foco" icon={<TrendingUp size={14}/>} color="text-[#cff178]">
           {data.summary?.rate ?? 0}%

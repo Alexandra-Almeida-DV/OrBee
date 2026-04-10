@@ -1,1 +1,1 @@
-export type ViewType = 'Home' | 'Daily' | 'Weekly' | 'Monthly' | 'Notas' | 'Configuracoes' | 'Project' | 'ReadingMeta' | 'GoalMeta' | 'HabitMeta' | 'Receitas';
+export type ViewType = 'Home' | 'Daily' | 'Weekly' | 'Monthly' | 'Notas' | 'Configuracoes' | 'Project' | 'ReadingMeta' | 'GoalMeta' | 'HabitMeta' | 'Receitas'| 'Login' | 'Settings' | 'LoginView';
