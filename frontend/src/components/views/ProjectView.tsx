@@ -1,12 +1,13 @@
 import { Plus, Trash2, X, Check, Book, Briefcase, GraduationCap, Zap, TrendingUp, LucideIcon, FileCog } from 'lucide-react';
 import { useEffect, useCallback, useState } from 'react';
-import api from '../../services/api';
+import { api } from '../../services/api';
 import { useProjectForm, Project } from '../../hooks/useProjectForm';
 // Subcomponentes
 import { ProjetoFields } from '../ProjectForms/PojetoFields';
 import { LeituraFields } from '../ProjectForms/LeituraFields';
 import { MetaFields } from '../ProjectForms/MetaFields';
 import { HabitoFields } from '../ProjectForms/HabitoFields';
+import { EstudoFields } from '../ProjectForms/EstudoFields';
 
 type TypeConfig = { icon: LucideIcon; color: string; bg: string; };
 
@@ -77,6 +78,24 @@ export function ProjectsView() {
         return <HabitoFields name={states.name} setName={actions.setName} habitGoal={states.habitGoal} selectedProject={states.selectedProject} setHabitGoal={actions.setHabitGoal} handleCheckIn={handleCheckIn} />;
       default:
         return null;
+      case 'estudo':
+      return (
+        <EstudoFields 
+          subject={states.category} 
+          setSubject={actions.setCategory}
+          studyHours={states.currentValue} 
+          setStudyHours={actions.setCurrentValue}
+          targetHours={states.targetValue} 
+          setTargetHours={actions.setTargetValue}
+          newStartDate={states.newStartDate}
+          setNewStartDate={actions.setNewStartDate}
+          newEndDate={states.newEndDate}
+          setNewEndDate={actions.setNewEndDate}
+          newDescription={states.newDescription}
+          setNewDescription={actions.setNewDescription}
+          studyProgress={progress.metaProgress} 
+        />
+      );  
     }
   };
 
@@ -90,7 +109,7 @@ export function ProjectsView() {
           <h2 className="text-4xl font-black text-[#5D5A88]">
             Meus <span className="text-[#cff178]">Projetos</span>
           </h2>
-          <p className="text-[#8A88B6] font-bold text-[10px] uppercase tracking-widest mt-1">
+          <p className="text-[#8A88B6] font-bold text-sm uppercase tracking-widest">
             Gerencie seu fluxo de trabalho
           </p>
         </div>
@@ -191,6 +210,7 @@ export function ProjectsView() {
                 <option value="leitura">📚 Leitura</option>
                 <option value="meta">💡 Meta</option>
                 <option value="habito">💪 Hábito</option>
+                <option value="estudo">🎓 Estudo</option>
               </select>
 
               {renderFormFields()}

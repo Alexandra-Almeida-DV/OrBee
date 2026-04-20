@@ -1,7 +1,7 @@
 import React from 'react';
 import { format, addDays, startOfWeek, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Clock, CheckCircle2, Circle } from 'lucide-react';
+import { Clock, CheckCircle2, Circle, LayoutDashboard } from 'lucide-react';
 import {
   DndContext, 
   closestCorners,
@@ -34,7 +34,6 @@ interface Task {
 
 interface WeeklyViewProps {
   tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
 interface DayColumnProps {
@@ -168,13 +167,20 @@ export function WeeklyView({ tasks, setTasks }: WeeklyViewProps) {
       onDragOver={handleDragOver} 
       onDragEnd={handleDragEnd}
     >
-      <div className="h-[calc(100vh-160px)] flex flex-col p-4 animate-in fade-in duration-700">
-        <header className="mb-6 shrink-0 px-2">
-          <h2 className="text-white text-3xl font-black tracking-tight">Visão Semanal</h2>
-          <p className="text-[#cff178] font-bold uppercase tracking-widest text-[10px] mt-1">
-            {format(days[0], 'dd MMM')} — {format(days[6], 'dd MMM')}
-          </p>
-        </header>
+      <div className="p-6 md:p-10 pb-20 pt-8 space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <header className="flex items-center gap-6 mb-10">
+               <div className="bg-[#cff178] p-3 rounded-2xl shadow-lg shadow-orange-100">
+                 <LayoutDashboard className="text-white" size={28} />
+               </div>
+               <div className="flex flex-col justify-center">
+                 <h2 className="text-4xl font-black text-[#5D5A88] leading-none">
+                   Como está sendo  <span className="text-[#cff178]">Minha semana?</span>
+                 </h2>
+                 <p className="text-[#8A88B6] font-bold text-sm uppercase tracking-widest">
+                   minha produtividade, insights e lembretes
+                 </p>
+               </div>
+             </header>
 
         <div className="flex-1 flex gap-4 md:gap-3 min-h-0 overflow-x-auto md:overflow-x-hidden snap-x snap-mandatory px-6 md:px-0 pb-6 custom-scrollbar">
           {days.map((day) => {
