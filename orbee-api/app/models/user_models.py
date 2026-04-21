@@ -16,8 +16,7 @@ class User(Base):
     bio = Column(String, nullable=True)
     photo_url = Column(String, nullable=True)
 
-    # Preferências armazenadas como JSON — evita nova tabela
-    preferences = Column(JSON, default={})
+    preferences = Column(JSON, default=dict)  # ✔ corrigido
 
     is_active = Column(Boolean, default=True)
 
@@ -28,3 +27,6 @@ class User(Base):
     tasks = relationship("TaskModel", back_populates="owner", cascade="all, delete-orphan")
     recipes = relationship("RecipeModel", back_populates="author")
     notifications = relationship("NotificationModel", back_populates="user")
+
+    def __repr__(self):
+        return f"<User id={self.id} email={self.email}>"

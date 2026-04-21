@@ -1,10 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-
 from app.core.database import engine, Base
-
-# Routers
 from app.routes.auth_routes import router as auth_router
 from app.routes.user_routes import router as user_router
 from app.routes.notes_routes import router as notes_router
@@ -15,8 +12,6 @@ from app.routes.recipes_routes import router as recipes_router
 from app.routes.analytics_routes import router as analytics_router
 from app.routes.notification_routes import router as notifications_router
 
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title="OrBee API 🐝",
     description="Sistema de Gestão de Produtividade e Estilo de Vida",
@@ -25,7 +20,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
