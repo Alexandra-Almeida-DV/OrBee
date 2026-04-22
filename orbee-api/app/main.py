@@ -12,6 +12,11 @@ from app.routes.recipes_routes import router as recipes_router
 from app.routes.analytics_routes import router as analytics_router
 from app.routes.notification_routes import router as notifications_router
 
+origins = [
+    "http://localhost:3000",
+    "https://orbee-web.vercel.app", 
+]
+
 app = FastAPI(
     title="OrBee API 🐝",
     description="Sistema de Gestão de Produtividade e Estilo de Vida",
@@ -20,7 +25,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
