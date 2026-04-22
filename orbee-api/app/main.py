@@ -14,7 +14,7 @@ from app.routes.notification_routes import router as notifications_router
 
 origins = [
     "http://localhost:3000",
-    "https://orbee-web.vercel.app", 
+    "https://orbee-web-hazel.vercel.app", 
 ]
 
 app = FastAPI(
