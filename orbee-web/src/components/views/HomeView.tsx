@@ -151,7 +151,7 @@ export function HomeView({ onViewChange }: HomeViewProps) {
           <GlassPanel
             radius="40px"
             revealDelay={80}
-            className="flex-[1.5] p-8 flex flex-col justify-between gap-6"
+            className="flex-[1.5] p-20 flex flex-col justify-between gap-6"
           >
             <div>
               <h3 className="text-[#cff178] font-bold text-xs uppercase tracking-widest mb-1">
