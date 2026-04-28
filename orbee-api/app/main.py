@@ -11,10 +11,15 @@ from app.routes.goals_routes import router as goals_router
 from app.routes.recipes_routes import router as recipes_router
 from app.routes.analytics_routes import router as analytics_router
 from app.routes.notification_routes import router as notifications_router
+import os
+from re import compile
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://orbee-web-hazel.vercel.app")
 
 origins = [
     "http://localhost:3000",
-    "https://orbee-web-hazel.vercel.app", 
+    "http://localhost:5173", 
+    FRONTEND_URL,
 ]
 
 app = FastAPI(

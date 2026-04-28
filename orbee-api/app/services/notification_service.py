@@ -4,7 +4,6 @@ from datetime import date, datetime
 from app.models.notification_models import NotificationModel
 from app.models.kanban_models import TaskModel
 
-
 class NotificationService:
 
     @staticmethod

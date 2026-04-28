@@ -9,7 +9,6 @@ class UserCreate(BaseModel):
     phone: Optional[str] = None
     bio: Optional[str] = None
 
-
 class UserResponse(BaseModel):
     id: int
     email: EmailStr
@@ -22,13 +21,11 @@ class UserResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
 class ProfileUpdate(BaseModel):
     full_name: Optional[str] = None
     display_name: Optional[str] = None
     bio: Optional[str] = None
     phone: Optional[str] = None
-
 
 class PreferencesUpdate(BaseModel):
     main_goal: Optional[str] = None
@@ -36,7 +33,6 @@ class PreferencesUpdate(BaseModel):
     focus_mode: Optional[str] = None
     notifications_enabled: Optional[bool] = None
     insight_frequency: Optional[str] = None
-
 
 class PasswordUpdate(BaseModel):
     current_password: str

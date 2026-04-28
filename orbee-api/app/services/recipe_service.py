@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from app.models.recipes_models import RecipeModel
 from app.schemas.recipes_schemas import RecipeCreate, RecipeUpdate
 
-
 class RecipeService:
 
     @staticmethod

@@ -1,14 +1,9 @@
 import { useState, useEffect } from 'react';
-
 export interface PointerPos {
   x: number;
   y: number;
 }
 
-/**
- * Tracks the global mouse/touch position in viewport coordinates.
- * Returns null when the pointer leaves the window or no touch is active.
- */
 export function usePointerPos(): PointerPos | null {
   const [pos, setPos] = useState<PointerPos | null>(null);
 

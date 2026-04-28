@@ -2,7 +2,6 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
-
 class RecipeBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     ingredients: str
@@ -12,10 +11,8 @@ class RecipeBase(BaseModel):
     category: Optional[str] = "Geral"
     image: Optional[str] = None
 
-
 class RecipeCreate(RecipeBase):
     pass
-
 
 class RecipeUpdate(BaseModel):
     title: Optional[str] = None
@@ -25,7 +22,6 @@ class RecipeUpdate(BaseModel):
     oven_time: Optional[str] = None
     category: Optional[str] = None
     image: Optional[str] = None
-
 
 class RecipeResponse(RecipeBase):
     id: int

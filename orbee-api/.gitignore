@@ -1,27 +1,20 @@
-# --- Ambientes Virtuais ---
+
 venv/
 .venv/
 env/
 ENV/
 virtualenv/
-
-# --- Bancos de Dados ---
 *.sqlite3
 *.db
 Kanban.db
-# Caso use o SQLite do SQLAlchemy às vezes ele gera arquivos temporários
 *.db-journal
 *.db-shm
 *.db-wal
-
-# --- Variáveis de Ambiente (SEGURANÇA!) ---
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-# --- Python / Cache ---
 __pycache__/
 *.py[cod]
 *$py.class
@@ -29,8 +22,6 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .ipynb_checkpoints/
-
-# --- Distribuição / Pacotes ---
 dist/
 build/
 *.egg-info/
@@ -38,12 +29,8 @@ nosetests.xml
 coverage.xml
 htmlcov/
 .tox/
-
-# --- Logs ---
 *.log
 logs/
-
-# --- Sistema Operacional (Lixo de pasta) ---
 .DS_Store
 Thumbs.db
 .idea/

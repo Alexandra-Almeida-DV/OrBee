@@ -16,8 +16,7 @@ class User(Base):
     bio = Column(String, nullable=True)
     photo_url = Column(String, nullable=True)
 
-    preferences = Column(JSON, default=dict)  # ✔ corrigido
-
+    preferences = Column(JSON, default=dict)  
     is_active = Column(Boolean, default=True)
 
     notes = relationship("NoteModel", back_populates="owner")

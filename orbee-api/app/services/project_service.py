@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from app.models.project_models import ProjectModel
 from app.schemas.project_schemas import ProjectCreate, ProjectUpdate
 
-
 class ProjectService:
 
     @staticmethod

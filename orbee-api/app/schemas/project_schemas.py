@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
-
 class ProjectBase(BaseModel):
     name: str
     type: str
@@ -12,10 +11,8 @@ class ProjectBase(BaseModel):
     study_hours: Optional[int] = None
     target_hours: Optional[int] = None
 
-
 class ProjectCreate(ProjectBase):
     pass
-
 
 class ProjectUpdate(BaseModel):
     name: Optional[str] = None
@@ -23,7 +20,6 @@ class ProjectUpdate(BaseModel):
     description: Optional[str] = None
     progress: Optional[float] = None
     meta_data: Optional[Dict[str, Any]] = None
-
 
 class ProjectResponse(ProjectBase):
     id: int
