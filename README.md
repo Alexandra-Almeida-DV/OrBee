@@ -1,11 +1,11 @@
 <div align="center">
 
-<img src="./src/assets/Logoorbee.png" alt="Orbee Logo" width="180px" />
+<img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/Logoorbee.png" alt="Orbee Logo" width="180px" />
 
 <br/>
 <br/>
 
-<img src="./src/assets/home.png" alt="Orbee Dashboard" width="100%" />
+<img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/home.png" alt="Orbee Dashboard" width="100%" />
 
 # 🐝 Orbee — Productivity Ecosystem
 
@@ -42,11 +42,11 @@ Não é só um gerenciador de tarefas. É o centro da sua órbita.
 
 | Home | Cadastro | Notas |
 |---|---|---|
-| <img src="./src/assets/home.png" width="250"/> | <img src="./src/assets/cadastroOrBee.png" width="250"/> | <img src="./src/assets/notas.png" width="250"/> |
+| <img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/home.png" width="250"/> | <img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/cadastroOrBee.png" width="250"/> | <img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/notas.png" width="250"/> |
 
 | Receitas | Insights | Mobile |
 |---|---|---|
-| <img src="./src/assets/receitas.png" width="250"/> | <img src="./src/assets/insightMensal.png" width="250"/> | <img src="./src/assets/mobile.png" width="250"/> |
+| <img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/receitas.png" width="250"/> | <img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/insightMensal.png" width="250"/> | <img src="https://raw.githubusercontent.com/Alexandra-Almeida-DV/OrBee/main/src/assets/mobile.png" width="250"/> |
 
 </div>
 
@@ -104,23 +104,19 @@ Não é só um gerenciador de tarefas. É o centro da sua órbita.
 
 ```
 OrBee/
-├── orbee-web/                  # Frontend
-│   ├── src/
-│   │   ├── assets/             # Imagens e recursos estáticos
-│   │   ├── components/         # Componentes reutilizáveis
-│   │   ├── contexts/           # Contextos React (auth, tema, efeitos)
-│   │   ├── hooks/              # Hooks customizados
-│   │   ├── pages/              # Páginas da aplicação
-│   │   ├── routes/             # Configuração de rotas
-│   │   └── services/           # Camada de comunicação com a API
-│
-└── orbee-api/                  # Backend
-    └── app/
-        ├── core/               # Database, config, segurança
-        ├── models/             # Modelos SQLAlchemy
-        ├── routes/             # Endpoints FastAPI
-        ├── schemas/            # Schemas Pydantic
-        └── services/           # Regras de negócio
+├── src/
+│   ├── assets/             # Imagens e recursos estáticos
+│   ├── components/         # Componentes reutilizáveis
+│   ├── contexts/           # Contextos React (auth, tema, efeitos)
+│   ├── hooks/              # Hooks customizados
+│   ├── pages/              # Páginas da aplicação
+│   ├── routes/             # Configuração de rotas
+│   └── services/           # Camada de comunicação com a API
+├── .env.example
+├── index.html
+├── package.json
+├── tailwind.config.js
+└── vite.config.ts
 ```
 
 ---
@@ -132,32 +128,12 @@ OrBee/
 - Python 3.11+
 - Conta no Supabase (ou PostgreSQL local)
 
-### Backend
+### Frontend
 
 ```bash
 # Clone o repositório
 git clone https://github.com/Alexandra-Almeida-DV/OrBee.git
-cd OrBee/orbee-api
-
-# Crie o ambiente virtual
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Instale as dependências
-pip install -r requirements.txt
-
-# Configure as variáveis de ambiente
-cp .env.example .env
-# edite o .env com suas credenciais
-
-# Rode o servidor
-uvicorn app.main:app --reload
-```
-
-### Frontend
-
-```bash
-cd OrBee/orbee-web
+cd OrBee
 
 # Instale as dependências
 npm install
@@ -173,16 +149,6 @@ npm run dev
 ---
 
 ## 🔐 Variáveis de Ambiente
-
-### Backend (`.env`)
-```dotenv
-DATABASE_URL=postgresql://postgres:SENHA@db.xxx.supabase.co:5432/postgres
-SECRET_KEY=sua_chave_secreta
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=1440
-CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
-FRONTEND_URL=https://orbee-web-hazel.vercel.app
-```
 
 ### Frontend (`.env.local`)
 ```dotenv
